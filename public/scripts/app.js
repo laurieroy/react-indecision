@@ -1,80 +1,126 @@
-'use strict';
+"use strict";
 
-// Differences between ES5 and ES6
-var add = function add(a, b) {
-	console.log(arguments); // all 3 args passed in would show even though only 2 defined
-	return a + b;
+console.log("app.js is running");
+
+var app = {
+	title: "Indecision App",
+	subtitle: "Put your life in the hands of a computer?",
+	options: ['One', 'Two']
 };
-console.log(add(5, 1, 100));
 
-var addArrow = function addArrow(a, b) {
-	// console.log(arguments)	// all 3 args passed in would show even though only 2 defined
-	return a + b;
+var template = React.createElement(
+	"div",
+	null,
+	React.createElement(
+		"h1",
+		null,
+		app.title
+	),
+	app.subtitle && React.createElement(
+		"p",
+		null,
+		app.subtitle
+	),
+	React.createElement(
+		"p",
+		null,
+		app.options.length > 0 ? "Here are your options" : "No Options"
+	),
+	React.createElement(
+		"ol",
+		null,
+		React.createElement(
+			"li",
+			null,
+			app.options[0]
+		),
+		React.createElement(
+			"li",
+			null,
+			app.options[1]
+		)
+	)
+);
+
+var count = 0;
+var addOne = function addOne() {
+	console.log('orig count: ' + count);
+	count++;
+	renderCounterApp();
+	console.log('count:' + count);
 };
-console.log(addArrow(5, 1, 100));
-
-// arg obj is no longer bound
-// this is no longer bound w/arrow functions
-// const user = {
-// 	name: 'Laurie',
-// 	cities: ['Tampa', 'Charleston', 'Honolulu', 'Portland'],
-// 	printPlacesLived: function () {
-// 		this.cities.forEach((city) => {
-// 			console.log(this.name + ' has lived in ' + city)
-// 		})
-// 	}
-// }
-// const user = {
-// 	name: 'Laurie',
-// 	cities: ['Tampa', 'Charleston', 'Honolulu', 'Portland'],
-// 	printPlacesLived() {
-// 		this.cities.forEach((city) => {
-// 			console.log(this.name + ' has lived in ' + city)
-// 		})
-// 	}
-// }
-
-// user.printPlacesLived()
-
-// const user = {
-// 	name: 'Laurie',
-// 	cities: ['Tampa', 'Charleston', 'Honolulu', 'Portland'],
-// 	printPlacesLived() {
-// 		 cityMessages = this.cities.map((city) => {
-// 			return this.name + ' has lived in ' + city;
-// 		});
-// 		return cityMessages;
-// 		}
-// 	};
-// console.log(user.printPlacesLived());
-
-var user = {
-	name: 'Laurie',
-	cities: ['Tampa', 'Charleston', 'Honolulu', 'Portland'],
-	printPlacesLived: function printPlacesLived() {
-		var _this = this;
-
-		return this.cities.map(function (city) {
-			return _this.name + ' has lived in ' + city;
-		});
-	}
+var minusOne = function minusOne() {
+	console.log('orig count: ' + count);
+	count--;
+	renderCounterApp();
+	console.log('minusOne');
 };
-console.log(user.printPlacesLived());
-
-// challenge
-
-var multiplier = {
-	multiplyBy: 2,
-	numbers: [1, 2, 3],
-	multiply: function multiply() {
-		var _this2 = this;
-
-		return this.numbers.map(function (number) {
-			return number * _this2.multiplyBy;
-		});
-	}
+var reset = function reset() {
+	console.log('reset');
+	count = 0;
+	renderCounterApp();
+	console.log('reset' + count);
 };
-// number -array of numbers
-// multiplyBy -single number
-// multiple return new array where numbers have been multiplied
-console.log(multiplier.multiply());
+var someId = 'myidhere';
+var templateTwo = React.createElement(
+	"div",
+	null,
+	React.createElement(
+		"h1",
+		null,
+		"Count: ",
+		count
+	),
+	React.createElement(
+		"button",
+		{ onClick: addOne, id: "addOne", className: "btn" },
+		"+1"
+	),
+	React.createElement(
+		"button",
+		{ onClick: minusOne, id: "minusOne", className: "btn" },
+		"-1"
+	),
+	React.createElement(
+		"button",
+		{ onClick: reset, id: "reset", className: "btn" },
+		"reset"
+	)
+);
+console.log(templateTwo);
+
+var appRoot = document.getElementById('app');
+
+ReactDOM.render(templateTwo, appRoot);
+
+var renderCounterApp = function renderCounterApp() {
+	var templateTwo = React.createElement(
+		"div",
+		null,
+		React.createElement(
+			"h1",
+			null,
+			"Count: ",
+			count
+		),
+		React.createElement(
+			"button",
+			{ onClick: addOne, id: "addOne", className: "btn" },
+			"+1"
+		),
+		React.createElement(
+			"button",
+			{ onClick: minusOne, id: "minusOne", className: "btn" },
+			"-1"
+		),
+		React.createElement(
+			"button",
+			{ onClick: reset, id: "reset", className: "btn" },
+			"reset"
+		)
+	);
+
+	ReactDOM.render(templateTwo, appRoot);
+};
+
+renderCounterApp();
