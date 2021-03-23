@@ -1,17 +1,15 @@
-'use strict';
-
 // Differences between ES5 and ES6
-var add = function add(a, b) {
-	console.log(arguments); // all 3 args passed in would show even though only 2 defined
+const add = function (a,b){
+	console.log(arguments)	// all 3 args passed in would show even though only 2 defined
 	return a + b;
-};
+}
 console.log(add(5, 1, 100));
 
-var addArrow = function addArrow(a, b) {
+const addArrow = (a,b) => {
 	// console.log(arguments)	// all 3 args passed in would show even though only 2 defined
 	return a + b;
-};
-console.log(addArrow(5, 1, 100));
+}
+console.log(addArrow(5, 1, 100));	
 
 // arg obj is no longer bound
 // this is no longer bound w/arrow functions
@@ -48,30 +46,22 @@ console.log(addArrow(5, 1, 100));
 // 	};
 // console.log(user.printPlacesLived());
 
-var user = {
+const user = {
 	name: 'Laurie',
 	cities: ['Tampa', 'Charleston', 'Honolulu', 'Portland'],
-	printPlacesLived: function printPlacesLived() {
-		var _this = this;
-
-		return this.cities.map(function (city) {
-			return _this.name + ' has lived in ' + city;
-		});
+	printPlacesLived() {
+		return this.cities.map((city) =>  this.name + ' has lived in ' + city);
 	}
 };
 console.log(user.printPlacesLived());
 
 // challenge
 
-var multiplier = {
+const multiplier = {
 	multiplyBy: 2,
 	numbers: [1, 2, 3],
-	multiply: function multiply() {
-		var _this2 = this;
-
-		return this.numbers.map(function (number) {
-			return number * _this2.multiplyBy;
-		});
+	multiply() {
+		return this.numbers.map((number) => number * this.multiplyBy)
 	}
 };
 // number -array of numbers
