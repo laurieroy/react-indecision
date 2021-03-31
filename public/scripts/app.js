@@ -7,12 +7,6 @@ var app = {
 	subtitle: "Put your life in the hands of a computer?",
 	options: []
 };
-var onRemoveAll = function onRemoveAll(e) {
-	e.preventDefault();
-
-	app.options = [];
-	render();
-};
 
 var onFormSubmit = function onFormSubmit(e) {
 	e.preventDefault();
@@ -26,6 +20,18 @@ var onFormSubmit = function onFormSubmit(e) {
 	}
 };
 
+var onMakeDecision = function onMakeDecision() {
+	var randomNum = Math.floor(Math.random() * app.options.length);
+	var option = app.options[randomNum];
+	alert(option);
+};
+
+var onRemoveAll = function onRemoveAll(e) {
+	e.preventDefault();
+
+	app.options = [];
+	render();
+};
 var appRoot = document.getElementById('app');
 
 var render = function render() {
@@ -48,9 +54,9 @@ var render = function render() {
 			app.options.length > 0 ? "Here are your options" : "No Options"
 		),
 		React.createElement(
-			"p",
-			null,
-			app.options.length
+			"button",
+			{ disabled: app.options.length === 0, onClick: onMakeDecision },
+			"What should I do?"
 		),
 		React.createElement(
 			"button",
@@ -60,16 +66,13 @@ var render = function render() {
 		React.createElement(
 			"ol",
 			null,
-			React.createElement(
-				"li",
-				null,
-				app.options[0]
-			),
-			React.createElement(
-				"li",
-				null,
-				app.options[1]
-			)
+			app.options.map(function (option) {
+				return React.createElement(
+					"li",
+					{ key: option },
+					option
+				);
+			})
 		),
 		React.createElement(
 			"form",

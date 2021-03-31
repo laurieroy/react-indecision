@@ -5,12 +5,6 @@ const app = {
 	subtitle: "Put your life in the hands of a computer?",
 	options: []
 }
-const onRemoveAll = (e) => {
-	e.preventDefault();
-
-	app.options = []
-	render();
-}
 
 const onFormSubmit = (e) => {
 	e.preventDefault();
@@ -24,6 +18,18 @@ const onFormSubmit = (e) => {
 	}
 }
 
+const onMakeDecision = () => {
+	const randomNum = Math.floor(Math.random() * app.options.length);
+	const option = app.options[randomNum]
+	alert(option) 
+}
+
+const onRemoveAll = (e) => {
+	e.preventDefault();
+
+	app.options = []
+	render();
+}
 const appRoot = document.getElementById('app');
 
 const render = () => {
@@ -32,12 +38,15 @@ const render = () => {
 			<h1>{ app.title }</h1>
 				{ app.subtitle && <p>{app.subtitle}</p>}
 			<p>{ app.options.length > 0 ? "Here are your options" : "No Options" }</p>
-			<p>{app.options.length }</p>
+			<button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
 			<button onClick={onRemoveAll} id="removeAll" className="btn">Remove All Options</button>
-			<ol>
-				<li>{app.options[0]}</li>
-				<li>{app.options[1]}</li>
-			</ol>
+				<ol>
+				{	
+					app.options.map((option) => {
+						return <li key={option}>{option}</li>
+					})
+				}
+				</ol>
 			<form onSubmit={onFormSubmit}>
 				<input type="text" name="option" />
 				<button>Add Option</button>
