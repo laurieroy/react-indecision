@@ -5,122 +5,85 @@ console.log("app.js is running");
 var app = {
 	title: "Indecision App",
 	subtitle: "Put your life in the hands of a computer?",
-	options: ['One', 'Two']
+	options: []
+};
+var onRemoveAll = function onRemoveAll(e) {
+	e.preventDefault();
+
+	app.options = [];
+	render();
 };
 
-var template = React.createElement(
-	"div",
-	null,
-	React.createElement(
-		"h1",
-		null,
-		app.title
-	),
-	app.subtitle && React.createElement(
-		"p",
-		null,
-		app.subtitle
-	),
-	React.createElement(
-		"p",
-		null,
-		app.options.length > 0 ? "Here are your options" : "No Options"
-	),
-	React.createElement(
-		"ol",
-		null,
-		React.createElement(
-			"li",
-			null,
-			app.options[0]
-		),
-		React.createElement(
-			"li",
-			null,
-			app.options[1]
-		)
-	)
-);
+var onFormSubmit = function onFormSubmit(e) {
+	e.preventDefault();
 
-var count = 0;
-var addOne = function addOne() {
-	console.log('orig count: ' + count);
-	count++;
-	renderCounterApp();
-	console.log('count:' + count);
+	var option = e.target.elements.option.value;
+
+	if (option) {
+		app.options.push(option);
+		e.target.elements.option.value = '';
+		render();
+	}
 };
-var minusOne = function minusOne() {
-	console.log('orig count: ' + count);
-	count--;
-	renderCounterApp();
-	console.log('minusOne');
-};
-var reset = function reset() {
-	console.log('reset');
-	count = 0;
-	renderCounterApp();
-	console.log('reset' + count);
-};
-var someId = 'myidhere';
-var templateTwo = React.createElement(
-	"div",
-	null,
-	React.createElement(
-		"h1",
-		null,
-		"Count: ",
-		count
-	),
-	React.createElement(
-		"button",
-		{ onClick: addOne, id: "addOne", className: "btn" },
-		"+1"
-	),
-	React.createElement(
-		"button",
-		{ onClick: minusOne, id: "minusOne", className: "btn" },
-		"-1"
-	),
-	React.createElement(
-		"button",
-		{ onClick: reset, id: "reset", className: "btn" },
-		"reset"
-	)
-);
-console.log(templateTwo);
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(templateTwo, appRoot);
-
-var renderCounterApp = function renderCounterApp() {
-	var templateTwo = React.createElement(
+var render = function render() {
+	var template = React.createElement(
 		"div",
 		null,
 		React.createElement(
 			"h1",
 			null,
-			"Count: ",
-			count
+			app.title
+		),
+		app.subtitle && React.createElement(
+			"p",
+			null,
+			app.subtitle
+		),
+		React.createElement(
+			"p",
+			null,
+			app.options.length > 0 ? "Here are your options" : "No Options"
+		),
+		React.createElement(
+			"p",
+			null,
+			app.options.length
 		),
 		React.createElement(
 			"button",
-			{ onClick: addOne, id: "addOne", className: "btn" },
-			"+1"
+			{ onClick: onRemoveAll, id: "removeAll", className: "btn" },
+			"Remove All Options"
 		),
 		React.createElement(
-			"button",
-			{ onClick: minusOne, id: "minusOne", className: "btn" },
-			"-1"
+			"ol",
+			null,
+			React.createElement(
+				"li",
+				null,
+				app.options[0]
+			),
+			React.createElement(
+				"li",
+				null,
+				app.options[1]
+			)
 		),
 		React.createElement(
-			"button",
-			{ onClick: reset, id: "reset", className: "btn" },
-			"reset"
+			"form",
+			{ onSubmit: onFormSubmit },
+			React.createElement("input", { type: "text", name: "option" }),
+			React.createElement(
+				"button",
+				null,
+				"Add Option"
+			)
 		)
 	);
 
-	ReactDOM.render(templateTwo, appRoot);
+	ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
+render();

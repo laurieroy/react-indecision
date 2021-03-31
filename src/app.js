@@ -3,66 +3,49 @@ console.log("app.js is running")
 const app = {
 	title: "Indecision App",
 	subtitle: "Put your life in the hands of a computer?",
-	options: ['One', 'Two']
+	options: []
+}
+const onRemoveAll = (e) => {
+	e.preventDefault();
+
+	app.options = []
+	render();
 }
 
-const template = (
-	<div>
-		<h1>{ app.title }</h1>
-			{ app.subtitle && <p>{app.subtitle}</p>}
-		<p>{ app.options.length > 0 ? "Here are your options" : "No Options" }</p>
-		<ol>
-			<li>{app.options[0]}</li>
-			<li>{app.options[1]}</li>
-		</ol>
-	</div>
-);
+const onFormSubmit = (e) => {
+	e.preventDefault();
 
-let count = 0;
-const addOne = () => {
-	console.log('orig count: ' + count)
-	count++
-	renderCounterApp();
-	console.log('count:' + count)
-};
-const minusOne = () => {
-	console.log('orig count: ' + count)
-	count--
-	renderCounterApp();
-	console.log('minusOne')
-};
-const reset = () => {
-	console.log('reset')
-	count = 0;
-	renderCounterApp();
-	console.log('reset'+ count)
-};
-const someId = 'myidhere'
-const templateTwo = (
-	<div>
-		<h1>Count: {count}</h1>
-		<button onClick={addOne} id="addOne" className="btn">+1</button>
-		<button onClick={minusOne} id="minusOne" className="btn">-1</button>
-		<button onClick={reset} id="reset" className="btn">reset</button>
-	</div>
-);
-console.log(templateTwo)
+	const option = e.target.elements.option.value;
+
+	if (option) {
+		app.options.push(option);
+		e.target.elements.option.value = '';
+		render();
+	}
+}
 
 const appRoot = document.getElementById('app');
 
-ReactDOM.render(templateTwo, appRoot);
-
-const renderCounterApp = () => {
-	const templateTwo = (
+const render = () => {
+	const template = (
 		<div>
-			<h1>Count: {count}</h1>
-			<button onClick={addOne} id="addOne" className="btn">+1</button>
-			<button onClick={minusOne} id="minusOne" className="btn">-1</button>
-			<button onClick={reset} id="reset" className="btn">reset</button>
+			<h1>{ app.title }</h1>
+				{ app.subtitle && <p>{app.subtitle}</p>}
+			<p>{ app.options.length > 0 ? "Here are your options" : "No Options" }</p>
+			<p>{app.options.length }</p>
+			<button onClick={onRemoveAll} id="removeAll" className="btn">Remove All Options</button>
+			<ol>
+				<li>{app.options[0]}</li>
+				<li>{app.options[1]}</li>
+			</ol>
+			<form onSubmit={onFormSubmit}>
+				<input type="text" name="option" />
+				<button>Add Option</button>
+			</form>
 		</div>
 	);
 
-	ReactDOM.render(templateTwo, appRoot);
+	ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
+render();
