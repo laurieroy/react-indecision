@@ -26,7 +26,7 @@ class Counter extends React.Component {
 		this.setState(() => {
 			return {count: 0 }
 		})
-// OLDER METHOD - not preferred
+		// OLDER METHOD - not preferred
 		// this.setState({
 		// 	count: 0 
 		// })
