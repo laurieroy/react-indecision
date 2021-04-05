@@ -23,12 +23,12 @@ class Counter extends React.Component {
 	}
 	
 	componentDidUpdate(prevProps, prevState) {
-		// prevState.count !== this.state.count
-		if (!isNaN(this.state.count)) {
+		if (prevState.count !== this.state.count)
+		// if (!isNaN(this.state.count)) {
 			localStorage.setItem('count', this.state.count)
 		}
 
-	}
+	
 
 	handleAddOne() {
 		this.setState((prevState) => {
