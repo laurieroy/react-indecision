@@ -4,9 +4,11 @@ This is part of [Andrew Mead](https://mead.io/)'s [The Complete React Developer 
 
 I am brushing up on using functional components since it's been a while since I've done much React.
 
+
 The app itself is a modified TODO list. One adds their todos, and a random selection of the items suggests what to do, similar to the magic 8 ball.
 
 Screenshots for the phone size:
+
 ![TodoList](public/images/Indecision_list.png)
 ![modal](public/images/Indecision_modal.png)
 
